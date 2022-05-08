@@ -1,2 +1,1 @@
-# OOP-Labs
-Repo for OOP labs
+# Viktroriya Dovgun | 053052
