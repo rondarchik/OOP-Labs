@@ -1,2 +1,1 @@
-# OOP-Labs
-Repo for OOP-Labs
+# Viktoriya Dovgun | 053502
