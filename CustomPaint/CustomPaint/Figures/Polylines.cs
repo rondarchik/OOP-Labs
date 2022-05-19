@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace CustomPaint.Figures
 {
-    class BrokenLine : Figure
+    class Polyline : Figure
     {
-        public BrokenLine(Color color, int penWidth) : base(color, penWidth) { }
+        public Polyline(Color color, int penWidth) : base(color, penWidth) { }
 
-        public BrokenLine() { }
+        public Polyline() { }
 
         public override Figure Clone()
         {
-            return (BrokenLine)MemberwiseClone();
+            return (Polyline)MemberwiseClone();
         }
 
         public override void Draw(Graphics graphics)
@@ -37,7 +37,7 @@ namespace CustomPaint.Figures
 
         public Figure Create(Color penColor, Color fillColor, int penWidth)
         {
-            return new BrokenLine(penColor, penWidth);
+            return new Polyline(penColor, penWidth);
         }
     }
 }
