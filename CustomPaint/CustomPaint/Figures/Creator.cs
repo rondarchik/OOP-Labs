@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace CustomPaint.Figures
 {
-    public interface ICreate
+    // Абстрактный класс Creator определяет абстрактный фабричный метод FactoryMethod(), который возвращает объект Figure.
+    public interface Creator
     {
         bool IsCanFill { get; }
         bool IsPolyline { get; }

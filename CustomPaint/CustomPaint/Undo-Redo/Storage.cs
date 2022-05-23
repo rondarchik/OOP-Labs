@@ -2,31 +2,35 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 
 namespace CustomPaint.Undo_Redo
 {
+    [DataContract]
     public class Storage
     {
         // хранится история всех выполненных команд
-        public Undo UndoList;
+        [DataMember]
+        public Undo UndoStack;
 
         // место, куда мы помещаем команду, когда она отменена
+        [DataMember]
         public Redo RedoStack;
 
         public Storage()
         {
-            UndoList = new Undo();
+            UndoStack = new Undo();
             RedoStack = new Redo();
         }
 
         public void Undo()
         {
-            if (!UndoList.IsEmpty())
+            if (!UndoStack.IsEmpty())
             {
-                RedoStack.PushStack(UndoList.RemoveLast());
+                RedoStack.PushStack(UndoStack.RemoveLast());
             }
         }
 
@@ -34,21 +38,21 @@ namespace CustomPaint.Undo_Redo
         {
             if (!RedoStack.IsEmpty())
             {
-                UndoList.Push(RedoStack.PopStack());
+                UndoStack.Push(RedoStack.PopStack());
             }
         }
 
         public void Clear()
         {
-            UndoList.ClearList();
+            UndoStack.ClearList();
             RedoStack.ClearStack();
         }
 
         public void DrawFigures(Graphics graphics)
         {
-            for (int i = 0; i < UndoList.ListCount(); i++)
+            for (int i = 0; i < UndoStack.ListCount(); i++)
             {
-                UndoList.ReturnThis(i).Draw(graphics);
+                UndoStack.ReturnThis(i).Draw(graphics);
             }
         }
     }

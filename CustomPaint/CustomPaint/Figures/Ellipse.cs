@@ -8,12 +8,16 @@ using System.Runtime.Serialization;
 
 namespace CustomPaint.Figures
 {
+    [DataContract]
     public class Ellipse : Figure
     {
+        [DataMember]
         private float width;
 
+        [DataMember]
         private float height;
 
+        [DataMember]
         private Brush brush;
 
 
@@ -50,17 +54,6 @@ namespace CustomPaint.Figures
 
             // карандаш, координаты верхнего левого угла, выоста, широта
             graphics.DrawEllipse(pen, first.X, first.Y, width, height);
-        }
-    }
-
-    public class EllipseCreate: ICreate
-    {
-        public bool IsCanFill { get { return true; } }
-        public bool IsPolyline { get { return false; } }
-
-        public Figure Create(Color penColor, Color fillColor, int penWidth)
-        {
-            return new Ellipse(penColor, fillColor, penWidth);
         }
     }
 }

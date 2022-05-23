@@ -8,17 +8,24 @@ using System.Runtime.Serialization;
 
 namespace CustomPaint.Figures
 {
+    // Абстрактный класс Figure определяет интерфейс класса, объекты которого надо создавать
+    [DataContract]
     public abstract class Figure
     {
+        [DataMember]
         public Point[] points;
 
+        [DataMember]
         public Color color;
 
+        //[DataMember]
         public Pen pen;
 
+        [DataMember]
         public int penWidth;
 
-        public bool IsFill { get; set; }
+        [DataMember]
+        public Boolean IsFill { get; set; }
 
         public Figure(Color color, int width)
         {

@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using CustomPaint.Figures;
 
 namespace CustomPaint.Undo_Redo
 {
+    [DataContract]
     public class Undo
     {
+        [DataMember]
         private Stack<Figure> undoList;
 
         public Undo()

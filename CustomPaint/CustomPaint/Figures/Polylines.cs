@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 
 namespace CustomPaint.Figures
 {
+    [DataContract]
     class Polyline : Figure
     {
         public Polyline(Color color, int penWidth) : base(color, penWidth) { }
@@ -30,14 +32,4 @@ namespace CustomPaint.Figures
         }
     }
 
-    public class Polylines : ICreate
-    {
-        public bool IsCanFill { get { return false; } }
-        public bool IsPolyline { get { return true; } }
-
-        public Figure Create(Color penColor, Color fillColor, int penWidth)
-        {
-            return new Polyline(penColor, penWidth);
-        }
-    }
 }

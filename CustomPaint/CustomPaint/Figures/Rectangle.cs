@@ -4,28 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-
+using System.Runtime.Serialization;
 
 namespace CustomPaint.Figures
 {
-    public class Rectangle : Figure
+    [DataContract]
+    public class MyRectangle : Figure
     {
+        [DataMember]
         private float width;
 
+        [DataMember]
         private float height;
 
+        [DataMember]
         private Brush brush;
 
-        public Rectangle(Color penColor, Color fillColor, int penWidth) : base(penColor, penWidth)
+        public MyRectangle(Color penColor, Color fillColor, int penWidth) : base(penColor, penWidth)
         {
             brush = new SolidBrush(fillColor);
         }
 
-        public Rectangle() { }
+        public MyRectangle() { }
 
         public override Figure Clone()
         {
-            return (Rectangle)MemberwiseClone();
+            return (MyRectangle)MemberwiseClone();
         }
 
         public override void Draw(Graphics graphics)
@@ -47,14 +51,4 @@ namespace CustomPaint.Figures
         }
     }
 
-    public class RectangleCreate : ICreate
-    {
-        public bool IsCanFill { get { return true; } }
-        public bool IsPolyline { get { return false; } }
-
-        public Figure Create(Color penColor, Color fillColor, int penWidth)
-        {
-            return new Rectangle(penColor, fillColor, penWidth);
-        }
-    }
 }
