@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CustomPaint.Figures;
 
-namespace CustomPaint.Figures
+namespace CustomPaint.Creators
 {
-    public class RectangleCreator : Creator
+    public class RectangleCreator : ICreator
     {
         public bool IsCanFill { get { return true; } }
         public bool IsPolyline { get { return false; } }

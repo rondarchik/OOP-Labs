@@ -1,15 +1,12 @@
-﻿using CustomPaint.Figures;
+﻿using CustomPaint.Creators;
+using CustomPaint.Figures;
+using CustomPaint.PluginTools;
 using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TrapezoidPlugin.Figures
+namespace TrapezoidLibrary
 {
     [Plugin("Trapezoid")]
-    public class TrapezoidCreator : Creator
+    public class TrapezoidCreator : ICreator
     {
         public bool IsCanFill { get { return true; } }
         public bool IsPolyline { get { return false; } }

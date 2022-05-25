@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Runtime.Serialization;
+
 
 namespace CustomPaint.Figures
 {
@@ -50,5 +48,4 @@ namespace CustomPaint.Figures
                 graphics.DrawRectangle(pen, first.X, first.Y, width, height);
         }
     }
-
 }

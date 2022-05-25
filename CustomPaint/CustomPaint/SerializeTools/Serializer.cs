@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Drawing;
 using Newtonsoft.Json;
-//using System.Text.Json;
-using CustomPaint.Undo_Redo;
+using System.Windows.Forms;
+using CustomPaint.Actions;
 
-
-namespace CustomPaint.Serialize
+namespace CustomPaint.SerializerTools
 {
     public class Serializer
     {
-        readonly JsonSerializerSettings settings = new JsonSerializerSettings 
-        { 
-            TypeNameHandling = TypeNameHandling.Auto, 
-            Formatting = Formatting.Indented 
+        readonly JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.All,
+            Formatting = Formatting.Indented
         };
-
 
         private OpenFileDialog openDialog = new OpenFileDialog();
         private SaveFileDialog saveDialog = new SaveFileDialog();
@@ -31,8 +26,7 @@ namespace CustomPaint.Serialize
             try
             {
                 saveDialog.DefaultExt = ".json";
-                saveDialog.Filter = "JSON files (*.json)|*json|Text files (*.txt)|*txt";
-
+                saveDialog.Filter = "JSON files (*.json)|*json";
                 saveDialog.ShowDialog();
                 string fileName = saveDialog.FileName;
 
@@ -50,7 +44,7 @@ namespace CustomPaint.Serialize
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error! Something went wrong!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
         }
@@ -66,7 +60,7 @@ namespace CustomPaint.Serialize
 
                 if (fileName != "")
                 {
-                    using (FileStream fStream = File.OpenRead(fileName))
+                    using (var fStream = File.OpenRead(fileName))
                     {
                         string streamReader = new StreamReader(fStream).ReadToEnd();
                         figureStorage = JsonConvert.DeserializeObject<Storage>(streamReader, settings);

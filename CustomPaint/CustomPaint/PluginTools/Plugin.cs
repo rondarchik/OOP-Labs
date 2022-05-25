@@ -1,37 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
-using CustomPaint.Figures;
 
-namespace CustomPaint
+namespace CustomPaint.PluginTools
 {
-    public class PluginLoading
+    public class Plugin
     {
         private Dictionary<string, Type> pluginDict = new Dictionary<string, Type>();
 
-        public string Load(OpenFileDialog open)
+        public string Load(OpenFileDialog openFileDialog)
         {
             string name = "";
 
-            Assembly plugin = Assembly.LoadFrom(open.FileName);
+            Assembly plugin = Assembly.LoadFrom(openFileDialog.FileName);
             Type[] types = plugin.GetTypes();
-
-            foreach (var current in types)
+            foreach (Type current in types)
             {
-                foreach (var attribute in current.GetCustomAttributes())
+                foreach (Attribute attribute in current.GetCustomAttributes())
                 {
-                    var att = attribute as PluginAttribute;
-                    
-                    if (att != null)
+                    PluginAttribute attr = attribute as PluginAttribute;
+                    if (attr != null)
                     {
-                        pluginDict.Add(att.ToolName, current);
-                        name = att.ToolName;
+                        pluginDict.Add(attr.ToolName, current);
+                        name = attr.ToolName;
                     }
                 }
             }

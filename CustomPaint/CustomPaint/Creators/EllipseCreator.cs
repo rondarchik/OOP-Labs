@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CustomPaint.Figures;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CustomPaint.Figures
+namespace CustomPaint.Creators
 {
-    public class EllipseCreator : Creator
+    public class EllipseCreator : ICreator
     {
         public bool IsCanFill { get { return true; } }
         public bool IsPolyline { get { return false; } }

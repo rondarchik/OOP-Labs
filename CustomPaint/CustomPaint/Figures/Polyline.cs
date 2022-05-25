@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CustomPaint.Figures
 {
     [DataContract]
-    class Polyline : Figure
+    public class Polyline : Figure
     {
         public Polyline(Color color, int penWidth) : base(color, penWidth) { }
 
@@ -31,5 +28,4 @@ namespace CustomPaint.Figures
             graphics.DrawLines(pen, points);
         }
     }
-
 }

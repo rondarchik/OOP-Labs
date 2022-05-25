@@ -1,25 +1,81 @@
-﻿using CustomPaint.Figures;
-using CustomPaint.Undo_Redo;
-using CustomPaint.Serialize;
+﻿using CustomPaint.Actions;
+using CustomPaint.Creators;
+using CustomPaint.Figures;
+using CustomPaint.PluginTools;
+using CustomPaint.SerializerTools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace CustomPaint
 {
     public partial class PaintForm : Form
     {
+        #region LocalVaribles
+        // public static FigureList figureList = new FigureList();
+        // FigureCreatorList figureCreatorList = new FigureCreatorList();
+
+        private Bitmap bitMap;
+        private bool IsDrawing;
+        private bool IsPencil;
+        private bool IsFigure;
+        private bool IsEraser;
+        private bool IsFill;
+        private Point first, second;
+        private List<Point> Points;
+        private Figure figure;
+        private Storage figuresStorage;
+        private ICreator creator;
+        private Color penColor, fillColor;
+        private int pencilWidth;
+        private int x1, y1;
+        private Graphics graphica;
+        private Pen pencil;
+        private Pen eraser;
+        private Serializer serializer;
+        private Plugin plugin;
+        private Type type;
+        #endregion
+
+        #region InitFunctions
         public PaintForm()
         {
             InitializeComponent();
 
+            StartInit();
+
+            //AddPlugins();
+
+            //AddPluginFigures();
+        }
+
+        private void SetStage(ICreator creator)
+        {
+            IsPencil = false;
+            IsEraser = false;
+            IsFigure = true;
+
+            if (creator.IsCanFill)
+            {
+                FillCheckBox.Enabled = true;
+            }
+            else
+            {
+                FillCheckBox.Enabled = false;
+            }
+        }
+
+        private void StartInit()
+        {
             this.penColor = Color.Black;
             this.fillColor = Color.White;
 
@@ -40,7 +96,7 @@ namespace CustomPaint
             this.figuresStorage = new Storage();
 
             this.serializer = new Serializer();
-            this.plugin = new PluginLoading();
+            this.plugin = new Plugin();
 
             this.pencil = new Pen(Color.Black);
             this.eraser = new Pen(Color.White, 10);
@@ -52,29 +108,74 @@ namespace CustomPaint
             this.x1 = this.y1 = 0;
         }
 
+        /*private void AddPlugins()
+        {
+            // find a directory of .exe file      
+            string AddInDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            // .dll files are to be located in the same directory as .exe is  
+            var AddInAssemblies = Directory.EnumerateFiles(AddInDir, "*Library.dll");
+            // types creating
 
-        private Bitmap bitMap;
-        private bool IsDrawing;
-        private bool IsPencil;
-        private bool IsFigure;
-        private bool IsEraser;
-        private bool IsFill;
-        private Point first, second;
-        private List<Point> Points;
-        private Figure figure;
-        private Storage figuresStorage;
-        private Creator creator;
-        private Color penColor, fillColor;
-        private int pencilWidth;
-        private int x1, y1;
-        private Graphics graphica;
-        private Pen pencil;
-        private Pen eraser;
-        private Serializer serializer;
-        private PluginLoading plugin;
-        private Type current;
+            foreach (var ass in AddInAssemblies)
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFrom(ass);
+                    Type[] types = assembly.GetExportedTypes();
+                    foreach (var type in types)
+                    {
+                        if (type.IsClass && typeof(ICreator).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
+                        {
+                            var plugin = Activator.CreateInstance(type);
+                            figureCreatorList.Creators.Add((ICreator)plugin);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
-        //MOUSE
+        private void AddPluginFigures()
+        {
+            FigurePlugins.fieldHeight = Canva.Size.Width;
+            FigurePlugins.fieldWidth = Canva.Size.Height;
+            String localDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var userFiguresFiles = Directory.EnumerateFiles(localDirectory, "*UserFigure.txt");
+            ToolStripMenuItem item;
+            Button button;
+            int X = 700;
+            int Y = 800;
+            foreach (var userFigureFile in userFiguresFiles)
+            {
+                try
+                {
+                    int i = 1;
+                    Stream fileStream = File.Open(userFigureFile, FileMode.Open);
+                    Serializer serializer = new Serializer();
+                    FigurePlugins userFigure = new FigurePlugins() { userFigureList = serializer.Deserialize_UserFigure(fileStream) };
+
+                    item = new ToolStripMenuItem()
+                    {
+                        Tag = userFigure
+                    };
+                    item.Click += new EventHandler(UserFigureButton_Click);
+                    toolStripMenuItem1.DropDownItems.Add(item);
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+    }*/
+        #endregion
+
+        #region CanvaMouseActions
         private void Canva_MouseDown(object sender, MouseEventArgs e)
         {
             if (figure != null && !creator.IsPolyline)
@@ -141,10 +242,10 @@ namespace CustomPaint
                     if (!figuresStorage.RedoStack.IsEmpty())
                     {
                         figuresStorage.RedoStack.ClearStack();
-                        Redo.Enabled = false;
+                        RedoButton.Enabled = false;
                     }
 
-                    Undo.Enabled = true;
+                    UndoButton.Enabled = true;
                 }
 
                 figure = figure.Clone();
@@ -179,14 +280,14 @@ namespace CustomPaint
                 {
                     IsDrawing = !IsDrawing;
 
-                    Undo.Enabled = true;
+                    UndoButton.Enabled = true;
                     figuresStorage.UndoStack.Push(figure);
                     figure = figure.Clone();
 
                     if (!figuresStorage.RedoStack.IsEmpty())
                     {
                         figuresStorage.RedoStack.ClearStack();
-                        Redo.Enabled = false;
+                        RedoButton.Enabled = false;
                     }
                 }
             }
@@ -204,68 +305,10 @@ namespace CustomPaint
 
         }
 
-        //FIGURES
-        private void PencilButton_Click(object sender, EventArgs e)
-        {
-            /*creator = new CurveLineCreator();
-            figure = creator.Create(penColor, fillColor, pencilWidth);
+        #endregion
 
-            SetStage(creator);*/
-            IsPencil = true;
-            IsEraser = false;
-            IsDrawing = false;
-
-        }
-
-        private void Eraser_Click(object sender, EventArgs e)
-        {
-            IsEraser = true;
-            IsPencil = false;
-            IsDrawing = false;
-        }
-
-        private void Polygon_Click(object sender, EventArgs e)
-        {
-            creator = new PolygonCreator();
-            figure = creator.Create(penColor, fillColor, pencilWidth);
-
-            SetStage(creator);
-        }
-
-        private void PolyLines_Click(object sender, EventArgs e)
-        {
-            creator = new PolylinesCreator();
-            figure = creator.Create(penColor, fillColor, pencilWidth);
-
-            SetStage(creator);
-        }
-
-        private void Line_Click(object sender, EventArgs e)
-        {
-            creator = new LineCreator();
-            figure = creator.Create(penColor, fillColor, pencilWidth);
-
-            SetStage(creator);
-        }
-
-        private void Rectangle_Click(object sender, EventArgs e)
-        {
-            creator = new RectangleCreator();
-            figure = creator.Create(penColor, fillColor, pencilWidth);
-
-            SetStage(creator);
-        }
-
-        private void Ellipse_Click(object sender, EventArgs e)
-        {
-            creator = new EllipseCreator();
-            figure = creator.Create(penColor, fillColor, pencilWidth);
-
-            SetStage(creator);
-        }
-
-        //COLORS
-        private void ChoosedColor_Click(object sender, EventArgs e)
+        #region SetColor
+        private void PenColorButton_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -281,14 +324,14 @@ namespace CustomPaint
             }
         }
 
-        private void FilledColor_Click(object sender, EventArgs e)
+        private void FillColorButton_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 ((Button)sender).BackColor = colorDialog1.Color;
                 fillColor = colorDialog1.Color;
 
-                if ((figure != null) && FillCheck.Enabled)
+                if ((figure != null) && FillCheckBox.Enabled)
                 {
                     // Содержит методы для локального или удаленного создания типов объектов или получения ссылок на существующие удаленные объекты.
                     // Создает экземпляр указанного типа, используя конструктор, который лучше всего соответствует указанным параметрам.
@@ -298,9 +341,9 @@ namespace CustomPaint
             }
         }
 
-        private void FillCheck_CheckedChanged(object sender, EventArgs e)
+        private void FillCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (FillCheck.Checked)
+            if (FillCheckBox.Checked)
             {
                 IsFill = true;
             }
@@ -310,56 +353,87 @@ namespace CustomPaint
             }
         }
 
-        //OTHER OBJECTs
-        private void Clear_Click(object sender, EventArgs e)
+        #endregion
+
+        #region FiguresButton
+        private void PencilButton_Click(object sender, EventArgs e)
         {
-            figuresStorage.Clear();
-            Canva.Refresh();
-
-            Undo.Enabled = false;
-            Redo.Enabled = false;
-
-            graphica.Clear(Canva.BackColor);
-            Canva.Image = bitMap;
+            IsPencil = true;
+            IsEraser = false;
+            IsDrawing = false;
         }
 
-        private void PenWidth_Scroll(object sender, EventArgs e)
+        private void EraserButton_Click(object sender, EventArgs e)
         {
-            pencilWidth = PenWidth.Value;
-            pencil.Width = PenWidth.Value;
-            eraser.Width = PenWidth.Value;
-
-            if (figure != null)
-            {
-                figure.penWidth = pencilWidth;
-                figure.SetPen();
-            }
-
-            PenLabel.Text = "Pen Width: " + pencilWidth.ToString();
+            IsPencil = false;
+            IsEraser = true;
+            IsDrawing = false;
         }
 
-        //UNDO/REDO
-        private void Undo_Click(object sender, EventArgs e)
+        private void LineButton_Click(object sender, EventArgs e)
+        {
+            creator = new LineCreator();
+            figure = creator.Create(penColor, fillColor, pencilWidth);
+
+            SetStage(creator);
+        }
+
+        private void RectangleButton_Click(object sender, EventArgs e)
+        {
+            creator = new RectangleCreator();
+            figure = creator.Create(penColor, fillColor, pencilWidth);
+
+            SetStage(creator);
+        }
+
+        private void EllipseButton_Click(object sender, EventArgs e)
+        {
+            creator = new EllipseCreator();
+            figure = creator.Create(penColor, fillColor, pencilWidth);
+
+            SetStage(creator);
+        }
+
+        private void PolygonButton_Click(object sender, EventArgs e)
+        {
+            creator = new PolygonCreator();
+            figure = creator.Create(penColor, fillColor, pencilWidth);
+
+            SetStage(creator);
+        }
+
+        private void PolylineButton_Click(object sender, EventArgs e)
+        {
+            creator = new PolylineCreator();
+            figure = creator.Create(penColor, fillColor, pencilWidth);
+
+            SetStage(creator);
+        }
+        #endregion
+
+        #region Undo/Redo
+        private void UndoButton_Click(object sender, EventArgs e)
         {
             figuresStorage.Undo();
             Canva?.Refresh();
 
-            Redo.Enabled = true;
+            RedoButton.Enabled = true;
             if (figuresStorage.UndoStack.IsEmpty())
-                Undo.Enabled = false;
+                UndoButton.Enabled = false;
         }
 
-        private void Redo_Click(object sender, EventArgs e)
+        private void RedoButton_Click(object sender, EventArgs e)
         {
             figuresStorage.Redo();
             Canva?.Refresh();
 
-            Undo.Enabled = true;
+            UndoButton.Enabled = true;
             if (figuresStorage.RedoStack.IsEmpty())
-                Redo.Enabled = false;
+                RedoButton.Enabled = false;
         }
+        #endregion
 
-        //SERIALIZE/DESERIALIZE/SAVE
+        #region Serialize
         private void SerializeButton_Click(object sender, EventArgs e)
         {
             serializer.Serialize(figuresStorage);
@@ -372,85 +446,78 @@ namespace CustomPaint
 
             if (!figuresStorage.UndoStack.IsEmpty())
             {
-                Undo.Enabled = true;
+                UndoButton.Enabled = true;
             }
             if (!figuresStorage.RedoStack.IsEmpty())
             {
-                Redo.Enabled = true;
+                RedoButton.Enabled = true;
             }
         }
+        #endregion
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        #region PenWidth&CLear
+        private void ClearButton_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = "Image(*.jpg)|*.jpg|All files|*.*";
+            figuresStorage.Clear();
+            Canva.Refresh();
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                var map = bitMap.Clone(new Rectangle(0, 0, Canva.Width, Canva.Height), bitMap.PixelFormat);
-                map.Save(saveFileDialog1.FileName);//, ImageFormat.Jpeg);
+            UndoButton.Enabled = false;
+            RedoButton.Enabled = false;
 
-            }
+            graphica.Clear(Canva.BackColor);
+            Canva.Image = bitMap;
         }
 
-        private void OpenButton_Click(object sender, EventArgs e)
+        private void WidthTrackBar_Scroll(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                bitMap = (Bitmap)Image.FromFile(openFileDialog1.FileName);
-                Canva.Image = bitMap;
-            }
-        }
+            pencilWidth = WidthTrackBar.Value;
+            pencil.Width = WidthTrackBar.Value;
+            eraser.Width = WidthTrackBar.Value;
 
-        //PLUGIN
-        private void AddPlugin_Click(object sender, EventArgs e)
+            if (figure != null)
+            {
+                figure.penWidth = pencilWidth;
+                figure.SetPen();
+            }
+
+            PenWidthLabel.Text = "Pen Width: " + pencilWidth.ToString();
+        }
+        #endregion
+
+        #region Plugins
+        private void PluginButton_Click(object sender, EventArgs e)
         {
             string pluginName;
-            openFileDialog1.Filter = @"Your plugin (*.dll)|*.dll";
-            try
+            var openFileDialog = new OpenFileDialog
             {
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    pluginName = plugin.Load(openFileDialog1);
+                Filter = @"File dll (*.dll)|*.dll"
+            };
 
-                    if (pluginName != "")
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                pluginName = plugin.Load(openFileDialog);
+
+                if (pluginName != "")
+                {
+                    PluginComboBox.Items.Add(pluginName);
+                    /*if (!PluginComboBox.Enabled)
                     {
-                        Plugins.Items.Add(pluginName);
-                    }
+                        PluginComboBox.Enabled = true;
+                    }*/
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-           
         }
 
-        private void Plugins_SelectedIndexChanged(object sender, EventArgs e)
+        private void PluginComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string pluginName = Plugins.GetItemText(Plugins.SelectedItem);
+            string pluginName = PluginComboBox.GetItemText(PluginComboBox.SelectedItem);
 
-            current = plugin.GetPluginType(pluginName);
-            creator = (Creator)Activator.CreateInstance(current);
+            type = plugin.GetPluginType(pluginName);
+            creator = (ICreator)Activator.CreateInstance(type);
             figure = creator.Create(penColor, fillColor, pencilWidth);
 
             SetStage(creator);
         }
-
-        //just..
-        private void SetStage(Creator creator)
-        {
-            IsPencil = false;
-            IsEraser = false;
-            IsFigure = true;
-
-            if (creator.IsCanFill)
-            {
-                FillCheck.Enabled = true;
-            }
-            else
-            {
-                FillCheck.Enabled = false;
-            }
-        }
+        #endregion
     }
 }

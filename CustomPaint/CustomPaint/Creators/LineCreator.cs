@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CustomPaint.Figures;
 
-namespace CustomPaint.Figures
+namespace CustomPaint.Creators
 {
-    public class CurveLineCreator : Creator
+    public class LineCreator : ICreator
     {
         public bool IsCanFill { get { return false; } }
         public bool IsPolyline { get { return false; } }
 
         public Figure Create(Color penColor, Color fillColor, int penWidth)
         {
-            return new CurveLine(penColor, penWidth);
+            return new Line(penColor, penWidth);
         }
     }
 }

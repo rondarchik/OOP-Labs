@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace CustomPaint.Undo_Redo
+namespace CustomPaint.Actions
 {
     [DataContract]
     public class Storage
@@ -44,15 +38,15 @@ namespace CustomPaint.Undo_Redo
 
         public void Clear()
         {
-            UndoStack.ClearList();
+            UndoStack.ClearStack();
             RedoStack.ClearStack();
         }
 
-        public void DrawFigures(Graphics graphics)
+        public void DrawFigures(Graphics graphics) //, Pen pen, Brush brush, Point StartPoint, Point FinishPoint, Point[] Points)
         {
-            for (int i = 0; i < UndoStack.ListCount(); i++)
+            for (int i = 0; i < UndoStack.StackCount(); i++)
             {
-                UndoStack.ReturnThis(i).Draw(graphics);
+                UndoStack.ReturnThis(i).Draw(graphics);//, pen, brush, StartPoint, FinishPoint, Points);
             }
         }
     }

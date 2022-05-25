@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Runtime.Serialization;
 using CustomPaint.Figures;
 
-namespace TrapezoidPlugin
+
+namespace TrapezoidLibrary
 {
     [DataContract]
     public class Trapezoid : Figure
@@ -34,11 +30,11 @@ namespace TrapezoidPlugin
         {
             // магические вычисления))
             int width = Math.Abs(base.points[1].X - base.points[0].X) / 3;
-            pointsT = new Point[4] { 
-                new Point(base.points[0].X + width, base.points[0].Y), 
+            pointsT = new Point[4] {
+                new Point(base.points[0].X + width, base.points[0].Y),
                 new Point(base.points[1].X - width, base.points[0].Y),
-                base.points[1], 
-                new Point(base.points[0].X, base.points[1].Y) 
+                base.points[1],
+                new Point(base.points[0].X, base.points[1].Y)
             };
 
             if (pen == null)

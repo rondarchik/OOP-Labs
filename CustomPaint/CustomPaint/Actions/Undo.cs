@@ -1,45 +1,42 @@
-﻿using System;
+﻿using CustomPaint.Figures;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using CustomPaint.Figures;
 
-namespace CustomPaint.Undo_Redo
+
+namespace CustomPaint.Actions
 {
     [DataContract]
     public class Undo
     {
         [DataMember]
-        private Stack<Figure> undoList;
+        private Stack<Figure> undoStack;
 
         public Undo()
         {
-            undoList = new Stack<Figure>();
+            undoStack = new Stack<Figure>();
         }
 
         public void Push(Figure figure)
         {
-            undoList.Push(figure);
+            undoStack.Push(figure);
         }
 
         public Figure RemoveLast()
         {
-            Figure temp = undoList.First();
-            undoList.Pop();
+            Figure temp = undoStack.First();
+            undoStack.Pop();
             return temp;
         }
 
         public Figure ReturnThis(int ind)
         {
-            return undoList.ElementAt(ind);
+            return undoStack.ElementAt(ind);
         }
 
         public bool IsEmpty()
         {
-            if (undoList.Count == 0)
+            if (undoStack.Count == 0)
             {
                 return true;
             }
@@ -49,14 +46,14 @@ namespace CustomPaint.Undo_Redo
             }
         }
 
-        public int ListCount()
+        public int StackCount()
         {
-            return undoList.Count();
+            return undoStack.Count();
         }
 
-        public void ClearList()
+        public void ClearStack()
         {
-            undoList.Clear();
+            undoStack.Clear();
         }
     }
 }

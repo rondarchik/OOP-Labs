@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomPaint", "CustomPaint\CustomPaint.csproj", "{60C1DEDA-1F6F-48B0-9CAD-09776FB5B5F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomPaint", "CustomPaint\CustomPaint.csproj", "{0B77010A-B5FA-43D9-9D39-28006F020B0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrapezoidPlugin", "TrapezoidPlugin\TrapezoidPlugin.csproj", "{7851F026-574F-4665-9E9B-B6A8A3CAFFFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrapezoidLibrary", "Trapezoid\TrapezoidLibrary.csproj", "{F83A8209-F0DD-43B5-A90F-99516FFBC60E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0B77010A-B5FA-43D9-9D39-28006F020B0F} = {0B77010A-B5FA-43D9-9D39-28006F020B0F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +16,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{60C1DEDA-1F6F-48B0-9CAD-09776FB5B5F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60C1DEDA-1F6F-48B0-9CAD-09776FB5B5F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60C1DEDA-1F6F-48B0-9CAD-09776FB5B5F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60C1DEDA-1F6F-48B0-9CAD-09776FB5B5F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7851F026-574F-4665-9E9B-B6A8A3CAFFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7851F026-574F-4665-9E9B-B6A8A3CAFFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7851F026-574F-4665-9E9B-B6A8A3CAFFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7851F026-574F-4665-9E9B-B6A8A3CAFFFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B77010A-B5FA-43D9-9D39-28006F020B0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B77010A-B5FA-43D9-9D39-28006F020B0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B77010A-B5FA-43D9-9D39-28006F020B0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B77010A-B5FA-43D9-9D39-28006F020B0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83A8209-F0DD-43B5-A90F-99516FFBC60E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83A8209-F0DD-43B5-A90F-99516FFBC60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83A8209-F0DD-43B5-A90F-99516FFBC60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83A8209-F0DD-43B5-A90F-99516FFBC60E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {371BC255-F057-4CB1-A8F7-6ACB6A52C7CA}
+		SolutionGuid = {737D8243-3069-4753-94C5-1A02A0711B51}
 	EndGlobalSection
 EndGlobal
