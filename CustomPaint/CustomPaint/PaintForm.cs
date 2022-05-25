@@ -21,11 +21,14 @@ namespace CustomPaint
     public partial class PaintForm : Form
     {
         #region LocalVaribles
-        // public static FigureList figureList = new FigureList();
-        // FigureCreatorList figureCreatorList = new FigureCreatorList();
+        //public static FigureList figureList = new FigureList();
+        //public static FigureCreatorList figureCreatorList = new FigureCreatorList();
 
         private Bitmap bitMap;
         private bool IsDrawing;
+        /*public bool IsUserFigure = false;
+        public bool IsFirstUserFigure = false;
+        NewFigure constUserFigure = new NewFigure();*/
         private bool IsPencil;
         private bool IsFigure;
         private bool IsEraser;
@@ -43,7 +46,8 @@ namespace CustomPaint
         private Pen eraser;
         private Serializer serializer;
         private Plugin plugin;
-        private Type type;
+
+        public object UserFigure { get; private set; }
         #endregion
 
         #region InitFunctions
@@ -248,7 +252,7 @@ namespace CustomPaint
                     UndoButton.Enabled = true;
                 }
 
-                figure = figure.Clone();
+                figure = (Figure)figure.Clone();
             }
         }
 
@@ -282,7 +286,7 @@ namespace CustomPaint
 
                     UndoButton.Enabled = true;
                     figuresStorage.UndoStack.Push(figure);
-                    figure = figure.Clone();
+                    figure = (Figure)figure.Clone();
 
                     if (!figuresStorage.RedoStack.IsEmpty())
                     {
@@ -485,6 +489,91 @@ namespace CustomPaint
         #endregion
 
         #region Plugins
+        /*
+        // .dll plugins adding
+        private void AddPlugins()
+        {
+            // find a directory of .exe file      
+            string AddInDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            // .dll files are to be located in the same directory as .exe is  
+            var AddInAssemblies = Directory.EnumerateFiles(AddInDir, "*Library.dll");
+            // types creating
+
+            foreach (var ass in AddInAssemblies)
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFrom(ass);
+                    Type[] types = assembly.GetExportedTypes();
+                    foreach (var type in types)
+                    {
+                        if (type.IsClass && typeof(ICreator).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
+                        {
+                            var plugin = Activator.CreateInstance(type);
+                            figureCreatorList.Creators.Add((ICreator)plugin);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void UserFigureButton_Click(object sender, EventArgs e)
+        {
+            IsUserFigure = true;
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            NewFigure tempUserFigure = (NewFigure)clickedItem.Tag;
+            figure = (NewFigure)tempUserFigure.Clone();
+            constUserFigure = (NewFigure)tempUserFigure.Clone();
+            IsFirstUserFigure = true;
+        }
+
+
+        private void AddUserFigures()
+        {
+            NewFigure.fieldHeight = Canva.Size.Width;
+            NewFigure.fieldWidth = Canva.Size.Height;
+            String localDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var userFiguresFiles = Directory.EnumerateFiles(localDirectory, "*UserFigure.txt");
+            ToolStripMenuItem item;
+            foreach (var userFigureFile in userFiguresFiles)
+            {
+                try
+                {
+                    Stream fileStream = File.Open(userFigureFile, FileMode.Open);
+                    Serializer serializer = new Serializer();
+                    NewFigure userFigure = new NewFigure()
+                    {
+                        userFigureList = serializer.DeserializeUserFigure(fileStream)
+                    };
+                    item = new ToolStripMenuItem()
+                    {
+                        Tag = userFigure
+                    };
+                    item.Click += new EventHandler(UserFigureButton_Click);
+                    //menuStrip1.Add(item);
+                    
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+
+
+            /*catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }*/
+
+
         private void PluginButton_Click(object sender, EventArgs e)
         {
             string pluginName;
@@ -499,20 +588,17 @@ namespace CustomPaint
 
                 if (pluginName != "")
                 {
-                    PluginComboBox.Items.Add(pluginName);
-                    /*if (!PluginComboBox.Enabled)
-                    {
-                        PluginComboBox.Enabled = true;
-                    }*/
+                    TrapezoidButton.Text = pluginName;
+                    TrapezoidButton.Visible = true;
                 }
             }
         }
 
-        private void PluginComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void TrapezoidButton_Click(object sender, EventArgs e)
         {
-            string pluginName = PluginComboBox.GetItemText(PluginComboBox.SelectedItem);
+            string pluginName = TrapezoidButton.Text;
+            var type = plugin.GetPluginType(pluginName);
 
-            type = plugin.GetPluginType(pluginName);
             creator = (ICreator)Activator.CreateInstance(type);
             figure = creator.Create(penColor, fillColor, pencilWidth);
 

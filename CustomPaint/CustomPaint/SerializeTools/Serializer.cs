@@ -5,6 +5,7 @@ using System.Drawing;
 using Newtonsoft.Json;
 using System.Windows.Forms;
 using CustomPaint.Actions;
+using CustomPaint.Figures;
 
 namespace CustomPaint.SerializerTools
 {
@@ -75,5 +76,7 @@ namespace CustomPaint.SerializerTools
 
             return currentFigureStorage;
         }
+
+        
     }
 }

@@ -12,9 +12,8 @@ namespace CustomPaint.PluginTools
 
         public PluginAttribute(string toolName)
         {
-            this.ToolName = toolName;
+            ToolName = toolName;
         }
-
 
         //public PluginAttribute() { }
     }

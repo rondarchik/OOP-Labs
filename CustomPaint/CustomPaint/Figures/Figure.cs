@@ -41,6 +41,11 @@ namespace CustomPaint.Figures
 
         public abstract void Draw(Graphics graphics);
 
-        public abstract Figure Clone();
+        public abstract object Clone();
+
+        public virtual void Add(List<Figure> list)
+        {
+            list.Add(this);
+        }
     }
 }

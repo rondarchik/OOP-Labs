@@ -30,12 +30,9 @@ namespace TrapezoidLibrary
         {
             // магические вычисления))
             int width = Math.Abs(base.points[1].X - base.points[0].X) / 3;
-            pointsT = new Point[4] {
-                new Point(base.points[0].X + width, base.points[0].Y),
-                new Point(base.points[1].X - width, base.points[0].Y),
-                base.points[1],
-                new Point(base.points[0].X, base.points[1].Y)
-            };
+            pointsT = new Point[4] { new Point(points[0].X + width, points[0].Y), new Point(points[1].X - width, points[0].Y),
+                                      points[1], new Point(points[0].X, points[1].Y) };
+
 
             if (pen == null)
             {

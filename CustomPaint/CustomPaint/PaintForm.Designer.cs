@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaintForm));
             this.MenuPanel = new System.Windows.Forms.Panel();
+            this.TrapezoidButton = new System.Windows.Forms.Button();
             this.PluginButton = new System.Windows.Forms.Button();
             this.ClearButton = new System.Windows.Forms.Button();
             this.DeserializeButton = new System.Windows.Forms.Button();
             this.SerializeButton = new System.Windows.Forms.Button();
-            this.PluginComboBox = new System.Windows.Forms.ComboBox();
             this.WidthTrackBar = new System.Windows.Forms.TrackBar();
             this.FillCheckBox = new System.Windows.Forms.CheckBox();
             this.ActionsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -67,11 +67,11 @@
             // MenuPanel
             // 
             this.MenuPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
+            this.MenuPanel.Controls.Add(this.TrapezoidButton);
             this.MenuPanel.Controls.Add(this.PluginButton);
             this.MenuPanel.Controls.Add(this.ClearButton);
             this.MenuPanel.Controls.Add(this.DeserializeButton);
             this.MenuPanel.Controls.Add(this.SerializeButton);
-            this.MenuPanel.Controls.Add(this.PluginComboBox);
             this.MenuPanel.Controls.Add(this.WidthTrackBar);
             this.MenuPanel.Controls.Add(this.FillCheckBox);
             this.MenuPanel.Controls.Add(this.ActionsPanel);
@@ -87,12 +87,24 @@
             this.MenuPanel.Size = new System.Drawing.Size(1906, 219);
             this.MenuPanel.TabIndex = 0;
             // 
+            // TrapezoidButton
+            // 
+            this.TrapezoidButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.TrapezoidButton.Location = new System.Drawing.Point(1477, 71);
+            this.TrapezoidButton.Name = "TrapezoidButton";
+            this.TrapezoidButton.Size = new System.Drawing.Size(157, 33);
+            this.TrapezoidButton.TabIndex = 12;
+            this.TrapezoidButton.Text = "Trapezoid";
+            this.TrapezoidButton.UseVisualStyleBackColor = true;
+            this.TrapezoidButton.Visible = false;
+            this.TrapezoidButton.Click += new System.EventHandler(this.TrapezoidButton_Click);
+            // 
             // PluginButton
             // 
             this.PluginButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.PluginButton.Location = new System.Drawing.Point(1483, 35);
+            this.PluginButton.Location = new System.Drawing.Point(1477, 33);
             this.PluginButton.Name = "PluginButton";
-            this.PluginButton.Size = new System.Drawing.Size(151, 32);
+            this.PluginButton.Size = new System.Drawing.Size(157, 32);
             this.PluginButton.TabIndex = 10;
             this.PluginButton.Text = "Add figure";
             this.PluginButton.UseVisualStyleBackColor = true;
@@ -131,16 +143,6 @@
             this.SerializeButton.Text = "Serialize";
             this.SerializeButton.UseVisualStyleBackColor = true;
             this.SerializeButton.Click += new System.EventHandler(this.SerializeButton_Click);
-            // 
-            // PluginComboBox
-            // 
-            this.PluginComboBox.FormattingEnabled = true;
-            this.PluginComboBox.Location = new System.Drawing.Point(1483, 71);
-            this.PluginComboBox.Name = "PluginComboBox";
-            this.PluginComboBox.Size = new System.Drawing.Size(151, 31);
-            this.PluginComboBox.TabIndex = 11;
-            this.PluginComboBox.SelectedIndexChanged += new System.EventHandler(this.PluginComboBox_SelectedIndexChanged);
-            this.PluginComboBox.Click += new System.EventHandler(this.PluginComboBox_SelectedIndexChanged);
             // 
             // WidthTrackBar
             // 
@@ -466,7 +468,7 @@
         private Button PolylineButton;
         private Button PolygonButton;
         private Button PluginButton;
-        private ComboBox PluginComboBox;
         private ColorDialog colorDialog1;
+        private Button TrapezoidButton;
     }
 }

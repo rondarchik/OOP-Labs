@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomPaint.Creators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,21 +13,22 @@ namespace CustomPaint.PluginTools
     {
         private Dictionary<string, Type> pluginDict = new Dictionary<string, Type>();
 
+
         public string Load(OpenFileDialog openFileDialog)
         {
             string name = "";
 
-            Assembly plugin = Assembly.LoadFrom(openFileDialog.FileName);
-            Type[] types = plugin.GetTypes();
+            Assembly assembly = Assembly.LoadFrom(openFileDialog.FileName);
+            Type[] types = assembly.GetExportedTypes();
             foreach (Type current in types)
             {
                 foreach (Attribute attribute in current.GetCustomAttributes())
                 {
-                    PluginAttribute attr = attribute as PluginAttribute;
-                    if (attr != null)
+                    PluginAttribute? att = attribute as PluginAttribute;
+                    if (att != null)
                     {
-                        pluginDict.Add(attr.ToolName, current);
-                        name = attr.ToolName;
+                        pluginDict.Add(att.ToolName, current);
+                        name = att.ToolName;
                     }
                 }
             }
