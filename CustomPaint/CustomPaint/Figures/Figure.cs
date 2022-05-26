@@ -17,7 +17,7 @@ namespace CustomPaint.Figures
         public Color color;
 
         //[DataMember]
-        public Pen pen;
+        //public Pen pen;
 
         [DataMember]
         public int penWidth;
@@ -29,14 +29,22 @@ namespace CustomPaint.Figures
         {
             this.color = color;
             this.penWidth = width;
-            pen = new Pen(color, width);
+            Pen = new Pen(color, width);
         }
 
         public Figure() { }
 
-        public void SetPen()
+        public Pen Pen
         {
-            pen = new Pen(color, penWidth);
+            get
+            {
+                return new Pen(color, penWidth);
+            }
+            set
+            {
+                color = value.Color;
+                penWidth = (int)value.Width;
+            }
         }
 
         public abstract void Draw(Graphics graphics);

@@ -26,17 +26,13 @@ namespace CustomPaint.Figures
 
         public override void Draw(Graphics graphics)
         {
-            if (pen == null)
-            {
-                SetPen();
-            }
 
             if (IsFill)
             {
                 graphics.FillPolygon(brush, points);
             }
 
-            graphics.DrawPolygon(pen, points);
+            graphics.DrawPolygon(Pen, points);
         }
     }
 }

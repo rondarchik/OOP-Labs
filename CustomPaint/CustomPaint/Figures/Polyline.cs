@@ -11,7 +11,7 @@ namespace CustomPaint.Figures
     {
         public Polyline(Color color, int penWidth) : base(color, penWidth) { }
 
-        public Polyline() { }
+        //public Polyline() { }
 
         public override Figure Clone()
         {
@@ -20,12 +20,7 @@ namespace CustomPaint.Figures
 
         public override void Draw(Graphics graphics)
         {
-            if (pen == null)
-            {
-                SetPen();
-            }
-
-            graphics.DrawLines(pen, points);
+            graphics.DrawLines(Pen, points);
         }
     }
 }

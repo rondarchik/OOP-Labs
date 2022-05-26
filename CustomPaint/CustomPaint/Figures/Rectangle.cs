@@ -32,9 +32,6 @@ namespace CustomPaint.Figures
 
         public override void Draw(Graphics graphics)
         {
-            if (pen == null)
-                SetPen();
-
             var first = new Point(Math.Min(points[0].X, points[1].X), Math.Min(points[0].Y, points[1].Y));
             var second = new Point(Math.Max(points[0].X, points[1].X), Math.Max(points[0].Y, points[1].Y));
 
@@ -45,7 +42,7 @@ namespace CustomPaint.Figures
                 graphics.FillRectangle(brush, first.X, first.Y, width, height);
             else
                 // карандаш, координаты верхнего левого угла, выоста, широта
-                graphics.DrawRectangle(pen, first.X, first.Y, width, height);
+                graphics.DrawRectangle(Pen, first.X, first.Y, width, height);
         }
     }
 }

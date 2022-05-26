@@ -1,0 +1,76 @@
+{
+  "$type": "CustomPaint.Actions.Storage, CustomPaint",
+  "UndoStack": {
+    "$type": "CustomPaint.Actions.Undo, CustomPaint",
+    "undoStack": {
+      "$type": "System.Collections.Generic.Stack`1[[CustomPaint.Figures.Figure, CustomPaint]], System.Collections",
+      "$values": [
+        {
+          "$type": "CustomPaint.Figures.MyRectangle, CustomPaint",
+          "width": 267.0,
+          "height": 170.0,
+          "brush": {
+            "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
+            "Color": "Black"
+          },
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "846, 337",
+              "1113, 507"
+            ]
+          },
+          "color": "Black",
+          "penWidth": 1,
+          "IsFill": true
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "1197, 572",
+              "448, 372"
+            ]
+          },
+          "color": "Black",
+          "penWidth": 1,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "935, 97",
+              "1197, 572"
+            ]
+          },
+          "color": "Black",
+          "penWidth": 1,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "684, 308",
+              "935, 97"
+            ]
+          },
+          "color": "Black",
+          "penWidth": 1,
+          "IsFill": false
+        }
+      ]
+    }
+  },
+  "RedoStack": {
+    "$type": "CustomPaint.Actions.Redo, CustomPaint",
+    "redoStack": {
+      "$type": "System.Collections.Generic.Stack`1[[CustomPaint.Figures.Figure, CustomPaint]], System.Collections",
+      "$values": []
+    }
+  }
+}

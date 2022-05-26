@@ -1,0 +1,135 @@
+{
+  "$type": "CustomPaint.Actions.Storage, CustomPaint",
+  "UndoStack": {
+    "$type": "CustomPaint.Actions.Undo, CustomPaint",
+    "undoStack": {
+      "$type": "System.Collections.Generic.Stack`1[[CustomPaint.Figures.Figure, CustomPaint]], System.Collections",
+      "$values": [
+        {
+          "$type": "TrapezoidLibrary.Trapezoid, TrapezoidLibrary",
+          "pointsT": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "411, 164",
+              "626, 164",
+              "839, 608",
+              "198, 608"
+            ]
+          },
+          "brush": {
+            "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
+            "Color": "Yellow"
+          },
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "198, 164",
+              "839, 608"
+            ]
+          },
+          "color": "255, 128, 64",
+          "penWidth": 50,
+          "IsFill": true
+        },
+        {
+          "$type": "TrapezoidLibrary.Trapezoid, TrapezoidLibrary",
+          "pointsT": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "1108, 24",
+              "1305, 24",
+              "1502, 456",
+              "911, 456"
+            ]
+          },
+          "brush": {
+            "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
+            "Color": "Yellow"
+          },
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "911, 24",
+              "1502, 456"
+            ]
+          },
+          "color": "255, 128, 64",
+          "penWidth": 50,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "1012, 158",
+              "1447, 451"
+            ]
+          },
+          "color": "255, 128, 64",
+          "penWidth": 50,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "591, 368",
+              "1294, 199"
+            ]
+          },
+          "color": "Black",
+          "penWidth": 1,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "625, 197",
+              "1143, 457"
+            ]
+          },
+          "color": "Black",
+          "penWidth": 7,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "575, 563",
+              "1271, 330"
+            ]
+          },
+          "color": "255, 128, 64",
+          "penWidth": 7,
+          "IsFill": false
+        },
+        {
+          "$type": "CustomPaint.Figures.Line, CustomPaint",
+          "points": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "307, 379",
+              "1018, 489"
+            ]
+          },
+          "color": "255, 128, 64",
+          "penWidth": 50,
+          "IsFill": false
+        }
+      ]
+    }
+  },
+  "RedoStack": {
+    "$type": "CustomPaint.Actions.Redo, CustomPaint",
+    "redoStack": {
+      "$type": "System.Collections.Generic.Stack`1[[CustomPaint.Figures.Figure, CustomPaint]], System.Collections",
+      "$values": []
+    }
+  }
+}

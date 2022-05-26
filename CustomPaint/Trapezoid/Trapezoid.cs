@@ -34,17 +34,12 @@ namespace TrapezoidLibrary
                                       points[1], new Point(points[0].X, points[1].Y) };
 
 
-            if (pen == null)
-            {
-                SetPen();
-            }
-
             if (IsFill)
             {
                 graphics.FillPolygon(brush, pointsT);
             }
 
-            graphics.DrawPolygon(pen, pointsT);
+            graphics.DrawPolygon(Pen, pointsT);
         }
     }
 }

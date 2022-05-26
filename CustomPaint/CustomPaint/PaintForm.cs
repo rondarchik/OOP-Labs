@@ -111,72 +111,6 @@ namespace CustomPaint
 
             this.x1 = this.y1 = 0;
         }
-
-        /*private void AddPlugins()
-        {
-            // find a directory of .exe file      
-            string AddInDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            // .dll files are to be located in the same directory as .exe is  
-            var AddInAssemblies = Directory.EnumerateFiles(AddInDir, "*Library.dll");
-            // types creating
-
-            foreach (var ass in AddInAssemblies)
-            {
-                try
-                {
-                    Assembly assembly = Assembly.LoadFrom(ass);
-                    Type[] types = assembly.GetExportedTypes();
-                    foreach (var type in types)
-                    {
-                        if (type.IsClass && typeof(ICreator).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
-                        {
-                            var plugin = Activator.CreateInstance(type);
-                            figureCreatorList.Creators.Add((ICreator)plugin);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void AddPluginFigures()
-        {
-            FigurePlugins.fieldHeight = Canva.Size.Width;
-            FigurePlugins.fieldWidth = Canva.Size.Height;
-            String localDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            var userFiguresFiles = Directory.EnumerateFiles(localDirectory, "*UserFigure.txt");
-            ToolStripMenuItem item;
-            Button button;
-            int X = 700;
-            int Y = 800;
-            foreach (var userFigureFile in userFiguresFiles)
-            {
-                try
-                {
-                    int i = 1;
-                    Stream fileStream = File.Open(userFigureFile, FileMode.Open);
-                    Serializer serializer = new Serializer();
-                    FigurePlugins userFigure = new FigurePlugins() { userFigureList = serializer.Deserialize_UserFigure(fileStream) };
-
-                    item = new ToolStripMenuItem()
-                    {
-                        Tag = userFigure
-                    };
-                    item.Click += new EventHandler(UserFigureButton_Click);
-                    toolStripMenuItem1.DropDownItems.Add(item);
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-    }*/
         #endregion
 
         #region CanvaMouseActions
@@ -323,7 +257,7 @@ namespace CustomPaint
                 if (figure != null)
                 {
                     figure.color = penColor;
-                    figure.SetPen();
+                    figure.Pen.Color = penColor;
                 }
             }
         }
@@ -481,7 +415,7 @@ namespace CustomPaint
             if (figure != null)
             {
                 figure.penWidth = pencilWidth;
-                figure.SetPen();
+                figure.Pen.Width = pencilWidth;
             }
 
             PenWidthLabel.Text = "Pen Width: " + pencilWidth.ToString();

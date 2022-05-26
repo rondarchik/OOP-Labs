@@ -20,13 +20,8 @@ namespace CustomPaint.Figures
 
         public override void Draw(Graphics graphics)
         {
-            if (pen == null)
-            {
-                SetPen();
-            }
-
             // карандаш, первая точка, вторая точка
-            graphics.DrawLine(pen, points[0], points[1]);
+            graphics.DrawLine(Pen, points[0], points[1]);
         }
     }
 }

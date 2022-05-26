@@ -33,11 +33,7 @@ namespace CustomPaint.Figures
         }
 
         public override void Draw(Graphics graphics)
-        {
-            if (pen == null)
-            {
-                SetPen();
-            }
+        { 
 
             var first = new Point(Math.Min(points[0].X, points[1].X), Math.Min(points[0].Y, points[1].Y));
             var second = new Point(Math.Max(points[0].X, points[1].X), Math.Max(points[0].Y, points[1].Y));
@@ -51,7 +47,7 @@ namespace CustomPaint.Figures
             }
 
             // карандаш, координаты верхнего левого угла, выоста, широта
-            graphics.DrawEllipse(pen, first.X, first.Y, width, height);
+            graphics.DrawEllipse(Pen, first.X, first.Y, width, height);
         }
     }
 }
