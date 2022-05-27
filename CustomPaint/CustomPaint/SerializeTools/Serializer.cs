@@ -24,38 +24,52 @@ namespace CustomPaint.SerializerTools
         {
             JsonSerializer serializer = JsonSerializer.Create(settings);
 
-            saveDialog.DefaultExt = ".json";
-            saveDialog.Filter = "JSON files (*.json)|*json";
-            saveDialog.ShowDialog();
-            string fileName = saveDialog.FileName;
-
-            if (fileName != "")
+            try
             {
-                using (StreamWriter streamWriter = new StreamWriter(fileName))
+                saveDialog.DefaultExt = ".json";
+                saveDialog.Filter = "JSON files (*.json)|*json";
+                saveDialog.ShowDialog();
+                string fileName = saveDialog.FileName;
+
+                if (fileName != "")
                 {
-                    using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
+                    using (StreamWriter streamWriter = new StreamWriter(fileName))
                     {
-                        serializer.Serialize(jsonWriter, figureStorage);
+                        using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
+                        {
+                            serializer.Serialize(jsonWriter, figureStorage);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Pofixil ＼(￣▽￣)／", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public Storage Deserialize(Storage currentFigureStorage)
         {
-            Storage figureStorage = new Storage();
-
-            openDialog.ShowDialog();
-            string fileName = openDialog.FileName;
-
-            if (fileName != "")
+            try
             {
-                using (var fStream = File.OpenRead(fileName))
+                Storage figureStorage = new Storage();
+
+                openDialog.ShowDialog();
+                string fileName = openDialog.FileName;
+
+                if (fileName != "")
                 {
-                    string streamReader = new StreamReader(fStream).ReadToEnd();
-                    figureStorage = JsonConvert.DeserializeObject<Storage>(streamReader, settings);
+                    using (var fStream = File.OpenRead(fileName))
+                    {
+                        string streamReader = new StreamReader(fStream).ReadToEnd();
+                        figureStorage = JsonConvert.DeserializeObject<Storage>(streamReader, settings);
+                    }
+                    return figureStorage;
                 }
-                return figureStorage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Pofixil ＼(￣▽￣)／", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return currentFigureStorage;
