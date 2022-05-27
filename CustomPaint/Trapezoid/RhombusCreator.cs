@@ -5,15 +5,15 @@ using System.Drawing;
 
 namespace TrapezoidLibrary
 {
-    [Plugin("Trapezoid")]
-    public class TrapezoidCreator : ICreator
+    [Plugin("Rhombus")]
+    public class RhombusCreator : ICreator
     {
         public bool IsCanFill { get { return true; } }
         public bool IsPolyline { get { return false; } }
 
         public Figure Create(Color color, Color fillColor, int penWidth)
         {
-            return new Trapezoid(color, fillColor, penWidth);
+            return new Rhombus(color, fillColor, penWidth);
         }
     }
 }

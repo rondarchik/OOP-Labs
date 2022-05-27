@@ -6,74 +6,30 @@
       "$type": "System.Collections.Generic.Stack`1[[CustomPaint.Figures.Figure, CustomPaint]], System.Collections",
       "$values": [
         {
-          "$type": "CustomPaint.Figures.Ellipse, CustomPaint",
-          "width": 528.0,
-          "height": 374.0,
+          "$type": "TrapezoidLibrary.Rhombus, TrapezoidLibrary",
+          "pointsT": {
+            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
+            "$values": [
+              "789, 213",
+              "1082, 454",
+              "789, 695",
+              "496, 454"
+            ]
+          },
           "brush": {
             "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
-            "Color": "255, 0, 128"
+            "Color": "Yellow"
           },
           "points": {
             "$type": "System.Drawing.Point[], System.Drawing.Primitives",
             "$values": [
-              "883, 320",
-              "1411, 694"
+              "789, 213",
+              "1082, 454"
             ]
           },
-          "color": "Red",
-          "penWidth": 31,
+          "color": "Black",
+          "penWidth": 1,
           "IsFill": true
-        },
-        {
-          "$type": "CustomPaint.Figures.MyRectangle, CustomPaint",
-          "width": 406.0,
-          "height": 181.0,
-          "brush": {
-            "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
-            "Color": "Red"
-          },
-          "points": {
-            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
-            "$values": [
-              "1055, 122",
-              "1461, 303"
-            ]
-          },
-          "color": "Red",
-          "penWidth": 31,
-          "IsFill": true
-        },
-        {
-          "$type": "CustomPaint.Figures.MyRectangle, CustomPaint",
-          "width": 599.0,
-          "height": 346.0,
-          "brush": {
-            "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
-            "Color": "White"
-          },
-          "points": {
-            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
-            "$values": [
-              "184, 343",
-              "783, 689"
-            ]
-          },
-          "color": "Red",
-          "penWidth": 31,
-          "IsFill": false
-        },
-        {
-          "$type": "CustomPaint.Figures.Line, CustomPaint",
-          "points": {
-            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
-            "$values": [
-              "516, 204",
-              "1525, 443"
-            ]
-          },
-          "color": "Red",
-          "penWidth": 50,
-          "IsFill": false
         }
       ]
     }
@@ -82,45 +38,7 @@
     "$type": "CustomPaint.Actions.Redo, CustomPaint",
     "redoStack": {
       "$type": "System.Collections.Generic.Stack`1[[CustomPaint.Figures.Figure, CustomPaint]], System.Collections",
-      "$values": [
-        {
-          "$type": "CustomPaint.Figures.Polyline, CustomPaint",
-          "points": {
-            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
-            "$values": [
-              "700, 126",
-              "333, 547",
-              "333, 547",
-              "650, 636",
-              "403, 176",
-              "403, 176"
-            ]
-          },
-          "color": "Red",
-          "penWidth": 31,
-          "IsFill": true
-        },
-        {
-          "$type": "CustomPaint.Figures.Polygon, CustomPaint",
-          "brush": {
-            "$type": "System.Drawing.SolidBrush, System.Drawing.Common",
-            "Color": "255, 0, 128"
-          },
-          "points": {
-            "$type": "System.Drawing.Point[], System.Drawing.Primitives",
-            "$values": [
-              "1583, 146",
-              "1857, 468",
-              "1194, 549",
-              "932, 83",
-              "932, 83"
-            ]
-          },
-          "color": "Red",
-          "penWidth": 31,
-          "IsFill": true
-        }
-      ]
+      "$values": []
     }
   }
 }

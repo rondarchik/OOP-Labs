@@ -94,7 +94,7 @@
             this.TrapezoidButton.Name = "TrapezoidButton";
             this.TrapezoidButton.Size = new System.Drawing.Size(157, 33);
             this.TrapezoidButton.TabIndex = 12;
-            this.TrapezoidButton.Text = "Trapezoid";
+            this.TrapezoidButton.Text = "Rhombus";
             this.TrapezoidButton.UseVisualStyleBackColor = true;
             this.TrapezoidButton.Visible = false;
             this.TrapezoidButton.Click += new System.EventHandler(this.TrapezoidButton_Click);

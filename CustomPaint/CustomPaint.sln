@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomPaint", "CustomPaint\CustomPaint.csproj", "{0B77010A-B5FA-43D9-9D39-28006F020B0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrapezoidLibrary", "Trapezoid\TrapezoidLibrary.csproj", "{F83A8209-F0DD-43B5-A90F-99516FFBC60E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RhombusLibrary", "Trapezoid\RhombusLibrary.csproj", "{F83A8209-F0DD-43B5-A90F-99516FFBC60E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0B77010A-B5FA-43D9-9D39-28006F020B0F} = {0B77010A-B5FA-43D9-9D39-28006F020B0F}
 	EndProjectSection
